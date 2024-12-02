@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class part1 {
-
+public class part2 {
     public static boolean isSafe(List<Integer> nums) {
         if (nums.get(0) < nums.get(1) && (nums.get(1) - nums.get(0) >= 1 && nums.get(1) - nums.get(0) <= 3)) {
             for (int i = 1; i < nums.size(); i++) {
@@ -34,7 +33,18 @@ public class part1 {
         return true;
     }
 
-    
+    public static boolean isDampenSafe(List<Integer> nums) {
+        for (int i = 0; i < nums.size(); i++) {
+            List<Integer> numsCopy = new ArrayList<>(nums);
+            numsCopy.remove(i);
+            if (isSafe(numsCopy)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     public static void main(String[] args) {
         int count = 0;
@@ -47,10 +57,15 @@ public class part1 {
                 for (String part : parts) {
                     numbers.add(Integer.parseInt(part));
                 }
-                
+
                 if (isSafe(numbers)) {
                     System.out.println(numbers.toString());
                     count++;
+                }
+                else {
+                    if (isDampenSafe(numbers)) {
+                        count++;
+                    }
                 }
             }
         } catch (IOException e) {
@@ -59,5 +74,4 @@ public class part1 {
 
         System.out.println(count);
     }
-
 }
