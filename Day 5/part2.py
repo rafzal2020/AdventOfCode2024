@@ -39,9 +39,25 @@ def is_valid_order(sublist):
     return True
 
 
+def swap(sublist, i, j):
+    temp = sublist[i]
+    sublist[i] = sublist[j]
+    sublist[j] = temp
+
+
+def make_valid_order(sublist):
+    for i in range(len(sublist)):
+        if i + 1 < len(sublist):
+            if sublist[i + 1] not in order_map[sublist[i]] and sublist[i] in order_map[sublist[i + 1]]:
+                swap(sublist, i, i + 1)
+
+
 for page_order in page_orders:
-    if is_valid_order(page_order):
-        print(page_order)
+    if not is_valid_order(page_order):
+        while not is_valid_order(page_order):
+            make_valid_order(page_order)
+
         middle_count += page_order[len(page_order)//2]
+
 
 print(middle_count)
